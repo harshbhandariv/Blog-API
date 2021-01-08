@@ -4,7 +4,12 @@ const route = express.Router();
 const auth = require('./routes/auth');
 const { searchUser, getFollowing, getFollowers, addFollower, unfollow, removeFollower } = require('./controller/userController');
 const { getPosts, getUserPosts, searchPost, likePost, unlikePost, isLiked, createComment, getLikes, getComments, createPost } = require('./controller/postController');
-
+const { Remarkable } = require('remarkable');
+route.get('/', (req, res) => {
+    let md = new Remarkable();
+    let readme = require('fs').readFileSync('README.MD', 'utf-8');
+    res.send(md.render(readme));
+})
 route.use('/auth', auth);
 
 route.get('/posts', (req, res) => {

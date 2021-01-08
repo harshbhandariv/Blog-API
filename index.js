@@ -21,7 +21,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 });
 
 //Setting up morgan
-app.use(morgan(process.env.MORGAN_LOGGING_TYPE_DEV));
+if (process.env.NODE_ENV == "DEV")
+    app.use(morgan(process.env.MORGAN_LOGGING_TYPE_DEV));
+else if (process.env.NODE_ENV == "PROD")
+    app.use(morgan(process.env.MORGAN_LOGGING_TYPE_PROD));
 const api = require('./api');
 
 //Setting up middleware to parse req.body
@@ -43,11 +46,27 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+if (process.env.NODE_ENV == 'DEV') {
+    app.get('/', (req, res) => {
+        if (req.user) {
+            res.send({
+                user: req.user
+            })
+        } else {
+            res.send({
+                message: "Express - based API for a Blog App"
+            })
+        }
+    })
+}
+
 // API middleware
 app.use('/api', api);
 const path = require('path');
-app.get('*', express.static('bloggz/build'));
-app.get('/*', (req, res) => res.sendFile(path.join(__dirname, 'bloggz', 'build', 'index.html')));
+if (process.env.NODE_ENV == 'PROD') {
+    app.get('*', express.static('bloggz/build'));
+    app.get('/*', (req, res) => res.sendFile(path.join(__dirname, 'bloggz', 'build', 'index.html')));
+}
 
 //Setting up port
 const PORT = process.env.PORT;

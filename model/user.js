@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
     profilePhoto: String,
-    githubId: String
+    githubId: String,
+    facebookId: String
 });
 
 const User = new mongoose.model('User', userSchema);
