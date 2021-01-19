@@ -1,0 +1,33 @@
+.addPost{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.postText{
+    margin: 10px;
+    width: 40%;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    resize: none;
+    outline: none;
+}
+
+.postbtn{
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    background-color:#2F80ED;
+    letter-spacing: 1px;
+    border: none;
+}
+
+@media screen and (max-width: 600px){
+    .postText{
+        width: 90%;
+    }
+}

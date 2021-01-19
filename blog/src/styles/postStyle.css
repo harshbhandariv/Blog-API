@@ -1,0 +1,100 @@
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.post{
+    background-color:#2F80ED;
+    position: relative;
+    margin: 10px;
+    padding: 10px;
+    width: 600px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+  
+.post .post-profilePhoto {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+  
+.post .post-name {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+}
+
+.post .post-username{
+    position: absolute;
+    top: 27px;
+    left: 60px;
+    font-size: 12px;
+    color: #fff;
+}
+.post .post-username::before{
+    content: '@';
+}
+  
+.post .post-time {
+    color: #fff;
+    font-size: 12px;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.post .post-like{
+    color: #fff;
+}
+
+.post .post-comment{
+    color: #fff;
+}
+
+.post .post-content{
+    color: #fff;
+}
+
+.post .post-interaction{
+    margin-top: 10px;
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+}
+
+.post .post-interaction .like, .post .post-interaction .comment{
+    width: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 800px){
+    .post{
+      width: 90%;
+    }
+}
+  
+.loadMorebtn{
+    color: #fff;
+    background-color:#2F80ED;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin: 20px;
+}
+  
+.loadMorebtn:hover{
+    color: #ccc;
+}
+  
+.loadMorebtn:active{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+  
+  

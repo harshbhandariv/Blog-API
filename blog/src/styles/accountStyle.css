@@ -1,0 +1,73 @@
+.account{
+    position: relative;
+    padding: 10px;
+}
+
+.account .account-username::before{
+    content: '@';
+}
+.account .account-profilePhoto{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 5px solid #2F80ED;
+}
+
+.account .account-name{
+    color: #2F80ED;
+    font-size: 20px;
+    font-weight: 500;
+    position: absolute;
+    top: 30px;
+    left: 180px;
+}
+
+.account .account-username{
+    color: #2F80ED;
+    position: absolute;
+    top: 55px;
+    left: 180px;
+}
+
+.account .account-interaction{
+    position: absolute;
+    top: 80px;
+    left: 180px;
+}
+
+.account .account-tab{
+    margin-top: 100px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.account-tab .tab{
+    cursor: pointer;
+}
+
+.account-tab .tab:hover{
+    cursor: pointer;
+    color: #2F80ED;
+}
+
+.logoutbtn{
+    position: absolute;
+    right: 50px;
+    padding: 5px;
+    color: #fff;
+    background-color: #2F80ED;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 500px){
+    .account .account-interaction{
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+    }    
+}
