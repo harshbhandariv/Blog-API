@@ -6,6 +6,7 @@
 - **GET** ```/api/auth/github/callback```
 - **GET** ```/api/auth/fail```
 - **GET** ```/api/auth/logout```
+- **GET** ```/api/loggedIn``` 
 - **GET** ```/api/posts``` 
 - **GET** ```/api/post/:postId```  
 - **GET** ```/api/post/:postId/likes/:pageNumber```  

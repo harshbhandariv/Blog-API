@@ -14,10 +14,13 @@ async function getPosts(pageNumber) {
             .find()
             .limit(parseInt(process.env.LIMITS))
             .skip((pageNumber - 1) * process.env.LIMITS)
-            .select("-likeBy -comment")
+            .select("-likedBy -comment")
             .populate({
                 path: "postedBy",
                 select: "name username profilePhoto"
+            })
+            .sort({
+                time: -1
             })
             .exec();
         return result;
@@ -35,7 +38,16 @@ async function getUserPosts(username, pageNumber) {
                 path: "posts",
                 limit: process.env.LIMITS,
                 skip: ((pageNumber - 1) * process.env.LIMITS),
-                select: "-comment -likedBy"
+                select: "-comment -likedBy",
+                populate: {
+                    path: "postedBy",
+                    select: "name profilePhoto username"
+                },
+                options: {
+                    sort: {
+                        time: -1
+                    }
+                }
             })
             .exec();
         return result;
@@ -62,18 +74,27 @@ async function getUserPosts(username, pageNumber) {
 //         console.log("50 posts created");
 //     }
 // }
+
 async function searchPost(postId) {
     try {
-        const result = await Post.findById(postId).exec();
-        return result;
+        const result = await Post.findById(postId)
+            .populate({
+                path: "postedBy",
+                select: "name username profilePhoto"
+            }).select('-likedBy -comment')
+            .exec();
+        if (result == null) {
+            throw "Not a valid ID"
+        }
+        return { result, message: "Post Search Successful" };
     } catch (error) {
-        return error;
+        return { error, message: "Post Search Unsuccessful" };
     }
 }
 
 async function likePost(postId, username) {
     try {
-        const result = await searchPost(postId);
+        const result = await Post.findById(postId).exec();
         const user = await searchUser(username);
         if (result.likedBy.includes(user._id)) return ({ message: "Already Liked" });
         result.likedBy.push(user._id);
@@ -87,7 +108,7 @@ async function likePost(postId, username) {
 
 async function unlikePost(postId, username) {
     try {
-        const result = await searchPost(postId);
+        const result = await Post.findById(postId).exec();
         const user = await searchUser(username);
         var index = result.likedBy.indexOf(user._id);
         if (index > -1) {
@@ -103,10 +124,10 @@ async function unlikePost(postId, username) {
 
 async function isLiked(postId, username) {
     try {
-        const result = await searchPost(postId);
+        const result = await Post.findById(postId).exec();
         const user = await searchUser(username);
-        if (result.likedBy.includes(user._id)) return ({ message: "Already Liked" });
-        return ({ message: "Post not liked" });
+        if (result.likedBy.includes(user._id)) return ({ message: true });
+        return ({ message: false });
     } catch (error) {
         return error;
     }
@@ -138,7 +159,7 @@ async function getLikes(postId, pageNumber) {
                 path: "likedBy",
                 limit: process.env.LIMITS,
                 skip: ((pageNumber - 1) * process.env.LIMITS),
-                select: "-email -posts -followers -following"
+                select: "name username profile"
             })
             .exec();
         return result;
@@ -157,7 +178,7 @@ async function getComments(postId, pageNumber) {
                 skip: ((pageNumber - 1) * process.env.LIMITS),
                 populate: {
                     path: "by",
-                    select: "-email -posts -followers -following"
+                    select: "name username profilePhoto"
                 }
             })
             .exec();

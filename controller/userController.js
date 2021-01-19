@@ -1,5 +1,4 @@
 const User = require('../model/user');
-const { Post, Comment } = require('../model/post');
 
 async function searchUser(username) {
     try {
